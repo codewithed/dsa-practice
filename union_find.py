@@ -1,22 +1,22 @@
 class UnionFind:
-    def __init__(self,n):
-        self.par = [i for i in range(n)]
-        self.rank = [1] * n
+    def __init__(self,size):
+        self.par = [i for i in range(size)]
+        self.rank = [1] * size
     
-    def Find(self,n):
-        if n != self.par(n):
-            self.par[n] = self.Find([self.par[n])
-            n = self.par[n]
-        return n
+    def Find(self,x):
+        if x != self.par[x]:
+            self.par[x] = self.Find([self.par[x])
+        return self.par[x]
 
     def Union(self,x,y):
-        p1,p2 = self.Find(x),self.Find(y)
-        if p1 == p2:
+        rootX, rootY = self.Find(x), self.Find(y)
+        if rootX == rootY:
             return False
-        if self.rank[p1] > self.rank[p2]:
-            self.par[p2] = p1
-            self.rank[p1] += self.rank[p2]
+        if self.rank[rootX] > self.rank[rootY]:
+            self.par[rootY] = rootX
+        elif self.rank[rootY] > self.rank[rootX]:
+            self.par[rootX] = rootY
         else:
-            self.par[p1] = p2
-            self.rank[p2] += p1
+            self.par[rootY] = rootX
+            self.rank[rootX] += 1
         return True
